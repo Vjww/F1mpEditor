@@ -1,7 +1,30 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="F1mpEditor.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ApplicationName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">F1MPEdit</Value>
+    </Setting>
+    <Setting Name="GameName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">F1 Manager Professional</Value>
+    </Setting>
+    <Setting Name="DefaultExecutableFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">f1.exe</Value>
+    </Setting>
+    <Setting Name="DefaultGameFolderPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\F1ManPro</Value>
+    </Setting>
+    <Setting Name="DefaultSavedGameFolderName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">SAVE</Value>
+    </Setting>
+    <Setting Name="UserGameFolderPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UserExecutableFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="InitialRun" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

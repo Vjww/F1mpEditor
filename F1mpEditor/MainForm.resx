@@ -117,8 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <metadata name="teamCollectionBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="teamCollectionBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="GameFolderBrowserDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>395, 17</value>
+  </metadata>
+  <data name="BasicDescriptionRichTextBox.Text" xml:space="preserve">
+    <value>{\rtf1\ansi\deff0{\fs24\b Team Motivation and Happiness}
+
+Every racing department runs at maximum efficiency when employees have high levels of happiness and motivation. Higher skilled employees will have high expectations of the team to deliver great racing results. Lower skilled workers will be more forgiving and will accept mediocre results. With the right mix of skilled employees and racing results, you can maintain an efficient department.
+
+Unfortunately, due to a bug in the game, when a department runs out of happiness or motivation, it will remain at 0%. Forever. Unless... you use this tool!
+
+Where a department indicator appears red, click the Boost button to raise the department happiness/motivation back up to 25%.
+
+You may need to come back to this tool to boost your departments after every race, until you are able to find a winning formula.}</value>
   </data>
 </root>
