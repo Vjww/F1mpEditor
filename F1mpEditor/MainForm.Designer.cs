@@ -1,6 +1,6 @@
 ﻿namespace F1mpEditor
 {
-    partial class SavedGameEditorForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SavedGameEditorForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.FileGroupBox = new System.Windows.Forms.GroupBox();
             this.FileRadioButton10 = new System.Windows.Forms.RadioButton();
             this.FileRadioButton9 = new System.Windows.Forms.RadioButton();
@@ -45,7 +45,7 @@
             this.OptionsButton = new System.Windows.Forms.Button();
             this.ExportButton = new System.Windows.Forms.Button();
             this.ImportButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.GridViewDescriptionGroupBox = new System.Windows.Forms.GroupBox();
             this.TeamsDataGridView = new System.Windows.Forms.DataGridView();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -115,7 +115,7 @@
             this.AdvancedDetailsTabPage = new System.Windows.Forms.TabPage();
             this.FileGroupBox.SuspendLayout();
             this.OperationGroupBox.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.GridViewDescriptionGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TeamsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.teamCollectionBindingSource)).BeginInit();
             this.MiscellaneousGroupBox.SuspendLayout();
@@ -151,12 +151,10 @@
             // FileRadioButton10
             // 
             this.FileRadioButton10.Appearance = System.Windows.Forms.Appearance.Button;
-            this.FileRadioButton10.Checked = true;
             this.FileRadioButton10.Location = new System.Drawing.Point(267, 17);
             this.FileRadioButton10.Name = "FileRadioButton10";
             this.FileRadioButton10.Size = new System.Drawing.Size(29, 23);
             this.FileRadioButton10.TabIndex = 0;
-            this.FileRadioButton10.TabStop = true;
             this.FileRadioButton10.Text = "10";
             this.FileRadioButton10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.FileRadioButton10.UseVisualStyleBackColor = true;
@@ -302,15 +300,15 @@
             this.ImportButton.UseVisualStyleBackColor = true;
             this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
             // 
-            // groupBox1
+            // GridViewDescriptionGroupBox
             // 
-            this.groupBox1.Controls.Add(this.TeamsDataGridView);
-            this.groupBox1.Location = new System.Drawing.Point(8, 8);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(736, 442);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Team Happiness and Motivation";
+            this.GridViewDescriptionGroupBox.Controls.Add(this.TeamsDataGridView);
+            this.GridViewDescriptionGroupBox.Location = new System.Drawing.Point(8, 8);
+            this.GridViewDescriptionGroupBox.Name = "GridViewDescriptionGroupBox";
+            this.GridViewDescriptionGroupBox.Size = new System.Drawing.Size(736, 442);
+            this.GridViewDescriptionGroupBox.TabIndex = 2;
+            this.GridViewDescriptionGroupBox.TabStop = false;
+            this.GridViewDescriptionGroupBox.Text = "Team Happiness and Motivation";
             // 
             // TeamsDataGridView
             // 
@@ -476,7 +474,7 @@
             this.BasicDescriptionRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.BasicDescriptionRichTextBox.Location = new System.Drawing.Point(8, 8);
             this.BasicDescriptionRichTextBox.Name = "BasicDescriptionRichTextBox";
-            this.BasicDescriptionRichTextBox.Size = new System.Drawing.Size(736, 160);
+            this.BasicDescriptionRichTextBox.Size = new System.Drawing.Size(736, 192);
             this.BasicDescriptionRichTextBox.TabIndex = 1;
             this.BasicDescriptionRichTextBox.Text = resources.GetString("BasicDescriptionRichTextBox.Text");
             // 
@@ -490,7 +488,7 @@
             this.Department05GroupBox.Controls.Add(this.MotivationPercentage05Label);
             this.Department05GroupBox.Controls.Add(this.MotivationIndicator05Label);
             this.Department05GroupBox.Controls.Add(this.HappinessPercentage05Label);
-            this.Department05GroupBox.Location = new System.Drawing.Point(236, 272);
+            this.Department05GroupBox.Location = new System.Drawing.Point(236, 308);
             this.Department05GroupBox.Name = "Department05GroupBox";
             this.Department05GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department05GroupBox.TabIndex = 0;
@@ -587,7 +585,7 @@
             this.Department04GroupBox.Controls.Add(this.MotivationPercentage04Label);
             this.Department04GroupBox.Controls.Add(this.MotivationIndicator04Label);
             this.Department04GroupBox.Controls.Add(this.HappinessPercentage04Label);
-            this.Department04GroupBox.Location = new System.Drawing.Point(8, 272);
+            this.Department04GroupBox.Location = new System.Drawing.Point(8, 308);
             this.Department04GroupBox.Name = "Department04GroupBox";
             this.Department04GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department04GroupBox.TabIndex = 0;
@@ -684,7 +682,7 @@
             this.Department03GroupBox.Controls.Add(this.MotivationPercentage03Label);
             this.Department03GroupBox.Controls.Add(this.MotivationIndicator03Label);
             this.Department03GroupBox.Controls.Add(this.HappinessPercentage03Label);
-            this.Department03GroupBox.Location = new System.Drawing.Point(464, 176);
+            this.Department03GroupBox.Location = new System.Drawing.Point(464, 212);
             this.Department03GroupBox.Name = "Department03GroupBox";
             this.Department03GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department03GroupBox.TabIndex = 0;
@@ -781,7 +779,7 @@
             this.Department02GroupBox.Controls.Add(this.MotivationPercentage02Label);
             this.Department02GroupBox.Controls.Add(this.MotivationIndicator02Label);
             this.Department02GroupBox.Controls.Add(this.HappinessPercentage02Label);
-            this.Department02GroupBox.Location = new System.Drawing.Point(236, 176);
+            this.Department02GroupBox.Location = new System.Drawing.Point(236, 212);
             this.Department02GroupBox.Name = "Department02GroupBox";
             this.Department02GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department02GroupBox.TabIndex = 0;
@@ -878,7 +876,7 @@
             this.Department01GroupBox.Controls.Add(this.MotivationPercentage01Label);
             this.Department01GroupBox.Controls.Add(this.MotivationIndicator01Label);
             this.Department01GroupBox.Controls.Add(this.HappinessPercentage01Label);
-            this.Department01GroupBox.Location = new System.Drawing.Point(8, 176);
+            this.Department01GroupBox.Location = new System.Drawing.Point(8, 212);
             this.Department01GroupBox.Name = "Department01GroupBox";
             this.Department01GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department01GroupBox.TabIndex = 0;
@@ -967,16 +965,16 @@
             // 
             // AdvancedDetailsTabPage
             // 
-            this.AdvancedDetailsTabPage.Controls.Add(this.groupBox1);
+            this.AdvancedDetailsTabPage.Controls.Add(this.GridViewDescriptionGroupBox);
             this.AdvancedDetailsTabPage.Location = new System.Drawing.Point(4, 22);
             this.AdvancedDetailsTabPage.Name = "AdvancedDetailsTabPage";
             this.AdvancedDetailsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.AdvancedDetailsTabPage.Size = new System.Drawing.Size(752, 458);
             this.AdvancedDetailsTabPage.TabIndex = 1;
-            this.AdvancedDetailsTabPage.Text = "Advanced";
+            this.AdvancedDetailsTabPage.Text = "Advanced (Read-Only)";
             this.AdvancedDetailsTabPage.UseVisualStyleBackColor = true;
             // 
-            // SavedGameEditorForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -985,12 +983,14 @@
             this.Controls.Add(this.MiscellaneousGroupBox);
             this.Controls.Add(this.OperationGroupBox);
             this.Controls.Add(this.FileGroupBox);
-            this.Name = "SavedGameEditorForm";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "MainForm";
             this.Text = "{0}";
             this.Load += new System.EventHandler(this.SavedGameEditorForm_Load);
             this.FileGroupBox.ResumeLayout(false);
             this.OperationGroupBox.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
+            this.GridViewDescriptionGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.TeamsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.teamCollectionBindingSource)).EndInit();
             this.MiscellaneousGroupBox.ResumeLayout(false);
@@ -1024,7 +1024,7 @@
         private System.Windows.Forms.Button OptionsButton;
         private System.Windows.Forms.Button ExportButton;
         private System.Windows.Forms.Button ImportButton;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox GridViewDescriptionGroupBox;
         private System.Windows.Forms.DataGridView TeamsDataGridView;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;

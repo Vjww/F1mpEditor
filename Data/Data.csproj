@@ -44,6 +44,7 @@
     <Compile Include="Entities\SavedGame\Team\Team.cs" />
     <Compile Include="FileConnection\SavedGameConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueMapping\SavedGame\Player\Player.cs" />
     <Compile Include="ValueMapping\SavedGame\Team\Team.cs" />
   </ItemGroup>
   <ItemGroup>

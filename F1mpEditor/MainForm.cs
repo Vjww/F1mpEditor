@@ -15,22 +15,73 @@ using F1mpEditor.Properties;
 
 namespace F1mpEditor
 {
-    public partial class SavedGameEditorForm : Form
+    public partial class MainForm : Form
     {
+        /* Team order/indices in the game
+         * ------------------------------
+         * Offset B508 in saved game file is the number of the team selected (for player 1).
+         * 
+         * Teams offsets B488 -> B4D0 (19 x 4 bytes). Note order of teams is not consistant.
+         * 
+         * 1997
+         * ----
+         * Team      GameIndexOrder GameChampOrder1996 ActualEnd96/End97
+         * Benetton   1               3                   3 /  3         // Not sure why 1st
+         * Williams   2               1                   1 /  1
+         * Ferrari    3               2                   2 /  2
+         * McLaren    4               4                   4 /  4
+         * Jordan     5               5                   5 /  5
+         * Sauber     6               6                   7 /  7         // Not sure why 6th
+         * Prost      7               7                   6 /  6         // Not sure why 7th
+         * Tyrrell    8               9                   8 / 10
+         * Arrows     9              10                   9 /  8
+         * Minardi   10              11                  10 / 11
+         * Stewart   11               8                 N/A /  9         // Suspect 11th as new entry into sport for 1997
+         * Lola      12              12
+         * Forti     13              13
+         * Larousse  14              14
+         * Lotus     15              15
+         * Pacific   16              16
+         * Honda     17              17
+         * Simtek    18              18
+         * TNT       19              19
+         */
+
         private const int TeamCount = 19;
 
-        public TeamCollection Teams { get; set; }
-
-        public SavedGameEditorForm()
+        public MainForm()
         {
             InitializeComponent();
 
+            // Convert lines in control to rtf
             var rtfString = string.Empty;
             foreach (var item in BasicDescriptionRichTextBox.Lines)
             {
-                rtfString += item + @"\line "; // Add linebreak after each item
+                // Add linebreak after each item
+                rtfString += item + @"\line ";
             }
             BasicDescriptionRichTextBox.Rtf = rtfString.TrimEnd(@"\line".ToCharArray());
+        }
+
+        public void PerformRefresh()
+        {
+            UpdateSavedGameRadioButtons();
+            ConfigureSavedGameControls();
+        }
+
+        private static string GetApplicationVersion()
+        {
+#if (!DEBUG)
+            {
+                return System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed
+                    ? System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString(2)
+                    : FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+            }
+#else
+            {
+                return FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+            }
+#endif
         }
 
         private void SavedGameEditorForm_Load(object sender, EventArgs e)
@@ -38,20 +89,8 @@ namespace F1mpEditor
             // Set icon
             Icon = Resources.icon1;
 
-#if (!DEBUG)
-            {
-                // Set form title text
-                Text = string.Format("{0} v{1}",
-                    Settings.Default.ApplicationName,
-                    FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion);
-            }
-#else
-            {
-                // Set form title text
-                Text = string.Format("{0} v{1}", Settings.Default.ApplicationName,
-                    FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion);
-            }
-#endif
+            // Set form title text
+            Text = $"{Settings.Default.ApplicationName} v{GetApplicationVersion()}";
 
             // On initial run
             if (Settings.Default.InitialRun)
@@ -68,8 +107,8 @@ namespace F1mpEditor
             Settings.Default.InitialRun = false;
             Settings.Default.Save();
 
-            ConfigureControls();
             UpdateSavedGameRadioButtons();
+            ConfigureControls();
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -84,12 +123,7 @@ namespace F1mpEditor
                 savedGameConnection.Open(filePath, StreamDirectionType.Read);
 
                 // Import from file
-
-                // TODO move player team offset to value mapping???
-                var playerTeamId = savedGameConnection.ReadInteger(46344) - 1;
-                //var playerTeamMotivation = savedGameConnection.ReadInteger(position + (offset * (playerTeam - 1)));
-
-                Teams = new TeamCollection();
+                var teams = new TeamCollection();
                 for (var id = 0; id < TeamCount; id++)
                 {
                     var valueMapping = new Data.ValueMapping.SavedGame.Team.Team(id);
@@ -109,10 +143,17 @@ namespace F1mpEditor
                         Department5Happiness = savedGameConnection.ReadInteger(valueMapping.Department5Happiness),
                         Department5Motivation = savedGameConnection.ReadInteger(valueMapping.Department5Motivation)
                     };
-                    Teams.Add(team);
+                    teams.Add(team);
                 }
 
-                PopulateControls(playerTeamId, Teams);
+                var player1TeamId = savedGameConnection.ReadInteger(Data.ValueMapping.SavedGame.Player.Player.GetPlayer1TeamIdOffset()) - 1;
+                var player1TeamRecord = teams.Single(x => x.Id == player1TeamId);
+
+                // Populate controls
+                PopulateHeaderControls(player1TeamId, player1TeamRecord.Name);
+                PopulateBasicControls(player1TeamRecord);
+                PopulateAdvancedControls(teams);
+
                 MessageBox.Show("Import complete!");
             }
             finally
@@ -133,15 +174,15 @@ namespace F1mpEditor
                 savedGameConnection.Open(filePath, StreamDirectionType.Write);
 
                 // Export to file
-                Teams = TeamsDataGridView.DataSource as TeamCollection;
-                if (Teams == null)
+                var teams = TeamsDataGridView.DataSource as TeamCollection;
+                if (teams == null)
                 {
                     MessageBox.Show("Please import data from a saved game file first before attempting to export.",
                         Settings.Default.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
-                foreach (var team in Teams)
+                foreach (var team in teams)
                 {
                     var valueMapping = new Data.ValueMapping.SavedGame.Team.Team(team.Id);
                     savedGameConnection.WriteInteger(valueMapping.Department1Happiness, team.Department1Happiness);
@@ -164,24 +205,114 @@ namespace F1mpEditor
             }
         }
 
-        private string BuildSavedGameFileName(int id)
+        private void OptionsButton_Click(object sender, EventArgs e)
+        {
+            var form = new OptionsForm(this);
+            form.ShowDialog();
+        }
+
+        private void BoostButton_Click(object sender, EventArgs e)
+        {
+            var buttonTag = ((Button)sender).Tag.ToString();
+            int boostButtonId;
+            if (!int.TryParse(buttonTag, out boostButtonId))
+            {
+                throw new Exception("Unable to parse Button.Tag property to int.");
+            }
+
+            // Boost value in data source for player 1 team
+            var player1TeamId = (int)Player1TeamNameLabel.Tag;
+            var teams = (TeamCollection)TeamsDataGridView.DataSource;
+
+            switch (boostButtonId)
+            {
+                // Cases for Happiness
+                case 1:
+                    teams.Single(x => x.Id == player1TeamId).Department1Happiness = 25;
+                    break;
+                case 3:
+                    teams.Single(x => x.Id == player1TeamId).Department2Happiness = 25;
+                    break;
+                case 5:
+                    teams.Single(x => x.Id == player1TeamId).Department3Happiness = 25;
+                    break;
+                case 7:
+                    teams.Single(x => x.Id == player1TeamId).Department4Happiness = 25;
+                    break;
+                case 9:
+                    teams.Single(x => x.Id == player1TeamId).Department5Happiness = 25;
+                    break;
+
+                // Cases for Motivation
+                case 2:
+                    teams.Single(x => x.Id == player1TeamId).Department1Motivation = 25;
+                    break;
+                case 4:
+                    teams.Single(x => x.Id == player1TeamId).Department2Motivation = 25;
+                    break;
+                case 6:
+                    teams.Single(x => x.Id == player1TeamId).Department3Motivation = 25;
+                    break;
+                case 8:
+                    teams.Single(x => x.Id == player1TeamId).Department4Motivation = 25;
+                    break;
+                case 10:
+                    teams.Single(x => x.Id == player1TeamId).Department5Motivation = 25;
+                    break;
+
+                default:
+                    throw new NotImplementedException("Case not implemented in switch statement.");
+            }
+
+            PopulateHeaderControls(player1TeamId, teams.Single(x => x.Id == player1TeamId).Name);
+            PopulateBasicControls(teams.Single(x => x.Id == player1TeamId));
+        }
+
+        private static string BuildSavedGameFileName(int id)
         {
             // Return "SAVE.001" or similar depending on selected file number
             return "SAVE." + id.ToString("000");
         }
 
-        private string BuildSavedGameFilePath(int id)
+        private static string BuildSavedGameFilePath(int id)
         {
-            return Path.Combine(Settings.Default.UserGameFolderPath,
-                Settings.Default.DefaultSavedGameFolderName, BuildSavedGameFileName(id));
+            return Path.Combine(Settings.Default.UserGameFolderPath, Settings.Default.DefaultSavedGameFolderName, BuildSavedGameFileName(id));
         }
 
         private void ConfigureControls()
         {
+            // Configure
+            ConfigureSavedGameControls();
             ConfigureDataGridViewControl(TeamsDataGridView);
         }
 
-        private void ConfigureDataGridViewControl(DataGridView control)
+        private void ConfigureSavedGameControls()
+        {
+            // If at least one radio buttons are enabled, enable Import/Export buttons, else disable
+            var isOneOrMoreSavedGamesAvailable = (FileGroupBox.Controls.OfType<RadioButton>().FirstOrDefault(r => r.Enabled) != null);
+            ImportButton.Enabled = isOneOrMoreSavedGamesAvailable;
+            ExportButton.Enabled = isOneOrMoreSavedGamesAvailable;
+
+            // Deselect all radio buttons
+            if (!isOneOrMoreSavedGamesAvailable)
+            {
+                foreach (var radioButton in FileGroupBox.Controls.OfType<RadioButton>())
+                {
+                    radioButton.Checked = false;
+                }
+            }
+
+            // Select first radio button that is enabled
+            if (isOneOrMoreSavedGamesAvailable)
+            {
+                FileGroupBox.Controls.OfType<RadioButton>()
+                    .OrderBy(x => Convert.ToInt32(x.Text))
+                    .First(r => r.Enabled)
+                    .Select();
+            }
+        }
+
+        private static void ConfigureDataGridViewControl(DataGridView control)
         {
             control.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             control.AllowUserToAddRows = false;
@@ -189,6 +320,12 @@ namespace F1mpEditor
             control.AllowUserToResizeRows = false;
             control.MultiSelect = false;
             control.RowHeadersVisible = false;
+
+            // Read-Only
+            foreach (DataGridViewColumn column in control.Columns)
+            {
+                column.ReadOnly = true;
+            }
         }
 
         private void ConfigureGameFolder()
@@ -197,9 +334,7 @@ namespace F1mpEditor
             {
                 // Prompt the user to select the game folder
                 MessageBox.Show(
-                    string.Format(
-                        "{0} requires you to select the {1} installation folder.{2}{2}" +
-                        "Click OK to browse for the {1} installation folder.",
+                    string.Format("{0} requires you to select the {1} installation folder.{2}{2}Click OK to browse for the {1} installation folder.",
                         Settings.Default.ApplicationName, Settings.Default.GameName, Environment.NewLine),
                     Settings.Default.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
@@ -212,10 +347,8 @@ namespace F1mpEditor
                     // Set installation folder to default and show message to advise
                     Settings.Default.UserGameFolderPath = Settings.Default.DefaultGameFolderPath;
                     MessageBox.Show(
-                        string.Format(
-                            "As you did not select an installation folder for {1}, {0} will assume that the game is installed at the following location.{2}{2}" +
-                            Settings.Default.DefaultGameFolderPath,
-                            Settings.Default.ApplicationName, Settings.Default.GameName, Environment.NewLine),
+                        string.Format("As you did not select an installation folder for {1}, {0} will assume that the game is installed at the following location.{2}{2}{3}",
+                            Settings.Default.ApplicationName, Settings.Default.GameName, Environment.NewLine, Settings.Default.DefaultGameFolderPath),
                         Settings.Default.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
@@ -231,11 +364,23 @@ namespace F1mpEditor
             {
                 MessageBox.Show(
                     string.Format(
-                        "{0} has encountered an error while attempting to configure the game folder.{1}{1}" + "Error: " +
-                        ex.Message + "{1}{1}" + "To resolve this error, try running {0} as an administrator.{1}{1}.",
-                        Settings.Default.ApplicationName, Environment.NewLine), Settings.Default.ApplicationName,
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "{0} has encountered an error while attempting to configure the game folder.{1}{1}" + "Error: {2}{1}{1}To resolve this error, try running {0} as an administrator.",
+                        Settings.Default.ApplicationName, Environment.NewLine, ex.Message),
+                    Settings.Default.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private static Color GetIndicatorColor(int value)
+        {
+            // Return Red for 24 or less
+            // Return Orange for 25-49
+            // Return Green for 50 or more
+
+            Color result;
+            if (value < 25) result = Color.Red;
+            else if ((value >= 25) && (value < 50)) result = Color.Orange;
+            else result = Color.Green;
+            return result;
         }
 
         private int GetSelectedSavedGame()
@@ -255,46 +400,37 @@ namespace F1mpEditor
             return selectedFileNumber;
         }
 
-        private bool IsSavedGameFileExists(int id)
+        private static bool IsSavedGameFileExists(int id)
         {
             return File.Exists(BuildSavedGameFilePath(id));
         }
 
-        private void PopulateControls(int playerTeamId, TeamCollection teams)
+        private void PopulateAdvancedControls(IEnumerable teams)
         {
-            var playerTeamRecord = teams.Single(x => x.Id == playerTeamId);
-            Player1TeamNameLabel.Text = playerTeamRecord.Name;
-
-            // Populate controls on Basic tab 
-            PopulatePlayerTeamValues(HappinessPercentage01Label, HappinessIndicator01Label, Boost01Button, playerTeamRecord.Department1Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage02Label, HappinessIndicator02Label, Boost03Button, playerTeamRecord.Department2Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage03Label, HappinessIndicator03Label, Boost05Button, playerTeamRecord.Department3Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage04Label, HappinessIndicator04Label, Boost07Button, playerTeamRecord.Department4Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage05Label, HappinessIndicator05Label, Boost09Button, playerTeamRecord.Department5Happiness);
-            PopulatePlayerTeamValues(MotivationPercentage01Label, MotivationIndicator01Label, Boost02Button, playerTeamRecord.Department1Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage02Label, MotivationIndicator02Label, Boost04Button, playerTeamRecord.Department2Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage03Label, MotivationIndicator03Label, Boost06Button, playerTeamRecord.Department3Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage04Label, MotivationIndicator04Label, Boost08Button, playerTeamRecord.Department4Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage05Label, MotivationIndicator05Label, Boost10Button, playerTeamRecord.Department5Motivation);
-
-            // Populate controls on Advanced tab
             TeamsDataGridView.DataSource = teams;
         }
 
-        private Color GetIndicatorColor(int value)
+        private void PopulateBasicControls(ITeam record)
         {
-            // Return Red for 24 or less
-            // Return Orange for 25-49
-            // Return Green for 50 or more
-
-            Color result;
-            if (value < 25) result = Color.Red;
-            else if ((value >= 25) && (value < 50)) result = Color.Orange;
-            else result = Color.Green;
-            return result;
+            PopulatePlayerTeamValues(HappinessPercentage01Label, HappinessIndicator01Label, Boost01Button, record.Department1Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage02Label, HappinessIndicator02Label, Boost03Button, record.Department2Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage03Label, HappinessIndicator03Label, Boost05Button, record.Department3Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage04Label, HappinessIndicator04Label, Boost07Button, record.Department4Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage05Label, HappinessIndicator05Label, Boost09Button, record.Department5Happiness);
+            PopulatePlayerTeamValues(MotivationPercentage01Label, MotivationIndicator01Label, Boost02Button, record.Department1Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage02Label, MotivationIndicator02Label, Boost04Button, record.Department2Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage03Label, MotivationIndicator03Label, Boost06Button, record.Department3Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage04Label, MotivationIndicator04Label, Boost08Button, record.Department4Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage05Label, MotivationIndicator05Label, Boost10Button, record.Department5Motivation);
         }
 
-        private void PopulatePlayerTeamValues(Control percentageLabel, Control indicatorLabel, Control boostButton, int value)
+        private void PopulateHeaderControls(int player1TeamId, string player1TeamName)
+        {
+            Player1TeamNameLabel.Tag = player1TeamId;
+            Player1TeamNameLabel.Text = player1TeamName;
+        }
+
+        private static void PopulatePlayerTeamValues(Control percentageLabel, Control indicatorLabel, Control boostButton, int value)
         {
             percentageLabel.Text = value + "%";
             indicatorLabel.BackColor = GetIndicatorColor(value);
@@ -314,72 +450,5 @@ namespace F1mpEditor
             FileRadioButton9.Enabled = IsSavedGameFileExists(9);
             FileRadioButton10.Enabled = IsSavedGameFileExists(10);
         }
-
-        private void OptionsButton_Click(object sender, EventArgs e)
-        {
-            var form = new OptionsForm();
-            form.Show();
-        }
-
-        private void BoostButton_Click(object sender, EventArgs e)
-        {
-            var buttonTag = ((Button)sender).Tag.ToString();
-            int boostButtonId;
-            if (!int.TryParse(buttonTag, out boostButtonId))
-            {
-                throw new Exception("Unable to parse Button.Tag property to int.");
-            }
-            switch (boostButtonId)
-            {
-                case 1:
-                    // Update grid cell to 25 etc.
-                    break;
-                default:
-                    throw new NotImplementedException("Case not implemented in switch statement.");
-            }
-
-            // TODO Update datasource
-            // TODO Populate controls
-        }
-
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    var connection = new SavedGameConnection();
-        //    connection.Open("", StreamDirectionType.Read);
-        //
-        //    var playerTeam = connection.ReadInteger(46344);
-        //    var playerTeamMotivation = connection.ReadInteger(position + (offset * (playerTeam - 1)));
-        //
-        //}
-
-        /*
-        Offset B508 in saved game file is the number of the team selected!
-        Note order of teams is not consistant.
-
-        B488 -> B4D0 (19 x 4 bytes)
-
-        1997
-        ----
-        Team GameOrder ChampOrder1996 Actual96/97
-        Benetton   1 3
-        Williams   2 1
-        Ferrari    3 2
-        McLaren    4 4
-        Jordan     5 5
-        Sauber     6 6 7/7?
-        Prost      7 7 6/6?
-        Tyrrell    8 9 8/10?
-        Arrows     9 10 9/8?
-        Minardi   10 11 10/11?
-        Stewart   11 8 N/A/9?
-        Lola      12 12
-        Forti     13 13
-        Larousse  14 14
-        Lotus     15 15
-        Pacific   16 16
-        Honda     17 17
-        Simtek    18 18
-        TNT       19 19
-        */
     }
 }

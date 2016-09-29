@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Data.Entities.SavedGame.Team;
-
-namespace Data.ValueMapping.SavedGame.Team
+﻿namespace Data.ValueMapping.SavedGame.Team
 {
     public class Team
     {
