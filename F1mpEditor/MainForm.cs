@@ -207,8 +207,19 @@ namespace F1mpEditor
 
         private void OptionsButton_Click(object sender, EventArgs e)
         {
-            var form = new OptionsForm(this);
-            form.ShowDialog();
+            try
+            {
+                // Hide parent form and show child form
+                var parentForm = this;
+                var childForm = new OptionsForm();
+                childForm.Show(parentForm);
+                parentForm.Hide();
+                childForm.FormClosing += delegate { parentForm.Show(); parentForm.PerformRefresh(); };
+            }
+            catch (Exception)
+            {
+                Close();
+            }
         }
 
         private void BoostButton_Click(object sender, EventArgs e)

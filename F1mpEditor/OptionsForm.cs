@@ -12,26 +12,16 @@ namespace F1mpEditor
             InitializeComponent();
         }
 
-        public OptionsForm(MainForm owner)
-        {
-            InitializeComponent();
-
-            Owner = owner;
-            FormClosing += OptionsForm_FormClosing;
-        }
-
         private void OptionsForm_Load(object sender, EventArgs e)
         {
             // Set icon
             Icon = Resources.icon1;
 
+            // Set form title text
+            Text = string.Format(Text, Settings.Default.ApplicationName) + " - Options";
+
             // Get path
             PathTextBox.Text = Settings.Default.UserGameFolderPath;
-        }
-
-        private void OptionsForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            ((MainForm)Owner).PerformRefresh();
         }
 
         private void ChangeGameFolderButton_Click(object sender, EventArgs e)

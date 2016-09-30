@@ -493,7 +493,7 @@
             this.Department05GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department05GroupBox.TabIndex = 0;
             this.Department05GroupBox.TabStop = false;
-            this.Department05GroupBox.Text = "Department";
+            this.Department05GroupBox.Text = "Race Department";
             // 
             // Boost10Button
             // 
@@ -590,7 +590,7 @@
             this.Department04GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department04GroupBox.TabIndex = 0;
             this.Department04GroupBox.TabStop = false;
-            this.Department04GroupBox.Text = "Department";
+            this.Department04GroupBox.Text = "Assembly Department";
             // 
             // Boost08Button
             // 
@@ -687,7 +687,7 @@
             this.Department03GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department03GroupBox.TabIndex = 0;
             this.Department03GroupBox.TabStop = false;
-            this.Department03GroupBox.Text = "Department";
+            this.Department03GroupBox.Text = "Aerodynamics Department";
             // 
             // Boost06Button
             // 
@@ -784,7 +784,7 @@
             this.Department02GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department02GroupBox.TabIndex = 0;
             this.Department02GroupBox.TabStop = false;
-            this.Department02GroupBox.Text = "Department";
+            this.Department02GroupBox.Text = "Production Department";
             // 
             // Boost04Button
             // 
@@ -881,7 +881,7 @@
             this.Department01GroupBox.Size = new System.Drawing.Size(216, 88);
             this.Department01GroupBox.TabIndex = 0;
             this.Department01GroupBox.TabStop = false;
-            this.Department01GroupBox.Text = "Department";
+            this.Department01GroupBox.Text = "Design Department";
             // 
             // Boost02Button
             // 

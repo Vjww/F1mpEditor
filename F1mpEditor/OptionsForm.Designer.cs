@@ -100,11 +100,9 @@
             this.Controls.Add(this.PathGroupBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "OptionsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Options";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OptionsForm_FormClosing);
+            this.Text = "{0}";
             this.Load += new System.EventHandler(this.OptionsForm_Load);
             this.PathGroupBox.ResumeLayout(false);
             this.PathGroupBox.PerformLayout();
