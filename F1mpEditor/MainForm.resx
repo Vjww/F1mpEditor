@@ -126,16 +126,16 @@
   <data name="BasicDescriptionRichTextBox.Text" xml:space="preserve">
     <value>{\rtf1\ansi\deff0{\fs24\b F1 Manager Pro – Team Motivation and Happiness}
 
-Every racing department runs at maximum efficiency when employees have high levels of happiness and motivation.
+Every racing department runs at maximum efficiency when employees have high levels of motivation and happiness.
 
 - Higher skilled employees will have high expectations of the team to deliver great racing results.
 - Lower skilled workers will be more forgiving and will accept mediocre results.
 
 With the right mix of skilled employees and racing results, you can maintain an efficient department.
 
-Unfortunately, due to a bug in the game, when a department runs out of happiness or motivation, it will remain at 0%. Forever.
+Unfortunately, due to a bug in the game, when a department runs out of motivation or happiness, it will remain at 0%. Forever.
 
-Where a department indicator appears red, click the Boost button to raise the department happiness/motivation back up to 25%.
+Where a department indicator appears red, click the Boost button to raise the department motivation/happiness levels back up to 25%.
 
 You may need to come back to this tool to boost your departments after every race, until you are able to find a winning formula.}</value>
   </data>

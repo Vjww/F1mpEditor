@@ -132,16 +132,16 @@ namespace F1mpEditor
                         Id = id,
                         Name = Encoding.ASCII.GetString(savedGameConnection.ReadByteArray(valueMapping.Name, Data.ValueMapping.SavedGame.Team.Team.NameLength)),
 
-                        Department1Happiness = savedGameConnection.ReadInteger(valueMapping.Department1Happiness),
                         Department1Motivation = savedGameConnection.ReadInteger(valueMapping.Department1Motivation),
-                        Department2Happiness = savedGameConnection.ReadInteger(valueMapping.Department2Happiness),
+                        Department1Happiness = savedGameConnection.ReadInteger(valueMapping.Department1Happiness),
                         Department2Motivation = savedGameConnection.ReadInteger(valueMapping.Department2Motivation),
-                        Department3Happiness = savedGameConnection.ReadInteger(valueMapping.Department3Happiness),
+                        Department2Happiness = savedGameConnection.ReadInteger(valueMapping.Department2Happiness),
                         Department3Motivation = savedGameConnection.ReadInteger(valueMapping.Department3Motivation),
-                        Department4Happiness = savedGameConnection.ReadInteger(valueMapping.Department4Happiness),
+                        Department3Happiness = savedGameConnection.ReadInteger(valueMapping.Department3Happiness),
                         Department4Motivation = savedGameConnection.ReadInteger(valueMapping.Department4Motivation),
-                        Department5Happiness = savedGameConnection.ReadInteger(valueMapping.Department5Happiness),
-                        Department5Motivation = savedGameConnection.ReadInteger(valueMapping.Department5Motivation)
+                        Department4Happiness = savedGameConnection.ReadInteger(valueMapping.Department4Happiness),
+                        Department5Motivation = savedGameConnection.ReadInteger(valueMapping.Department5Motivation),
+                        Department5Happiness = savedGameConnection.ReadInteger(valueMapping.Department5Happiness)
                     };
                     teams.Add(team);
                 }
@@ -185,16 +185,16 @@ namespace F1mpEditor
                 foreach (var team in teams)
                 {
                     var valueMapping = new Data.ValueMapping.SavedGame.Team.Team(team.Id);
-                    savedGameConnection.WriteInteger(valueMapping.Department1Happiness, team.Department1Happiness);
                     savedGameConnection.WriteInteger(valueMapping.Department1Motivation, team.Department1Motivation);
-                    savedGameConnection.WriteInteger(valueMapping.Department2Happiness, team.Department2Happiness);
+                    savedGameConnection.WriteInteger(valueMapping.Department1Happiness, team.Department1Happiness);
                     savedGameConnection.WriteInteger(valueMapping.Department2Motivation, team.Department2Motivation);
-                    savedGameConnection.WriteInteger(valueMapping.Department3Happiness, team.Department3Happiness);
+                    savedGameConnection.WriteInteger(valueMapping.Department2Happiness, team.Department2Happiness);
                     savedGameConnection.WriteInteger(valueMapping.Department3Motivation, team.Department3Motivation);
-                    savedGameConnection.WriteInteger(valueMapping.Department4Happiness, team.Department4Happiness);
+                    savedGameConnection.WriteInteger(valueMapping.Department3Happiness, team.Department3Happiness);
                     savedGameConnection.WriteInteger(valueMapping.Department4Motivation, team.Department4Motivation);
-                    savedGameConnection.WriteInteger(valueMapping.Department5Happiness, team.Department5Happiness);
+                    savedGameConnection.WriteInteger(valueMapping.Department4Happiness, team.Department4Happiness);
                     savedGameConnection.WriteInteger(valueMapping.Department5Motivation, team.Department5Motivation);
+                    savedGameConnection.WriteInteger(valueMapping.Department5Happiness, team.Department5Happiness);
                 }
 
                 MessageBox.Show("Export complete!");
@@ -237,38 +237,38 @@ namespace F1mpEditor
 
             switch (boostButtonId)
             {
-                // Cases for Happiness
-                case 1:
-                    teams.Single(x => x.Id == player1TeamId).Department1Happiness = 25;
-                    break;
-                case 3:
-                    teams.Single(x => x.Id == player1TeamId).Department2Happiness = 25;
-                    break;
-                case 5:
-                    teams.Single(x => x.Id == player1TeamId).Department3Happiness = 25;
-                    break;
-                case 7:
-                    teams.Single(x => x.Id == player1TeamId).Department4Happiness = 25;
-                    break;
-                case 9:
-                    teams.Single(x => x.Id == player1TeamId).Department5Happiness = 25;
-                    break;
-
                 // Cases for Motivation
-                case 2:
+                case 1:
                     teams.Single(x => x.Id == player1TeamId).Department1Motivation = 25;
                     break;
-                case 4:
+                case 3:
                     teams.Single(x => x.Id == player1TeamId).Department2Motivation = 25;
                     break;
-                case 6:
+                case 5:
                     teams.Single(x => x.Id == player1TeamId).Department3Motivation = 25;
                     break;
-                case 8:
+                case 7:
                     teams.Single(x => x.Id == player1TeamId).Department4Motivation = 25;
                     break;
-                case 10:
+                case 9:
                     teams.Single(x => x.Id == player1TeamId).Department5Motivation = 25;
+                    break;
+
+                // Cases for Happiness
+                case 2:
+                    teams.Single(x => x.Id == player1TeamId).Department1Happiness = 25;
+                    break;
+                case 4:
+                    teams.Single(x => x.Id == player1TeamId).Department2Happiness = 25;
+                    break;
+                case 6:
+                    teams.Single(x => x.Id == player1TeamId).Department3Happiness = 25;
+                    break;
+                case 8:
+                    teams.Single(x => x.Id == player1TeamId).Department4Happiness = 25;
+                    break;
+                case 10:
+                    teams.Single(x => x.Id == player1TeamId).Department5Happiness = 25;
                     break;
 
                 default:
@@ -423,16 +423,16 @@ namespace F1mpEditor
 
         private void PopulateBasicControls(ITeam record)
         {
-            PopulatePlayerTeamValues(HappinessPercentage01Label, HappinessIndicator01Label, Boost01Button, record.Department1Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage02Label, HappinessIndicator02Label, Boost03Button, record.Department2Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage03Label, HappinessIndicator03Label, Boost05Button, record.Department3Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage04Label, HappinessIndicator04Label, Boost07Button, record.Department4Happiness);
-            PopulatePlayerTeamValues(HappinessPercentage05Label, HappinessIndicator05Label, Boost09Button, record.Department5Happiness);
-            PopulatePlayerTeamValues(MotivationPercentage01Label, MotivationIndicator01Label, Boost02Button, record.Department1Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage02Label, MotivationIndicator02Label, Boost04Button, record.Department2Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage03Label, MotivationIndicator03Label, Boost06Button, record.Department3Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage04Label, MotivationIndicator04Label, Boost08Button, record.Department4Motivation);
-            PopulatePlayerTeamValues(MotivationPercentage05Label, MotivationIndicator05Label, Boost10Button, record.Department5Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage01Label, MotivationIndicator01Label, Boost01Button, record.Department1Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage02Label, MotivationIndicator02Label, Boost03Button, record.Department2Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage03Label, MotivationIndicator03Label, Boost05Button, record.Department3Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage04Label, MotivationIndicator04Label, Boost07Button, record.Department4Motivation);
+            PopulatePlayerTeamValues(MotivationPercentage05Label, MotivationIndicator05Label, Boost09Button, record.Department5Motivation);
+            PopulatePlayerTeamValues(HappinessPercentage01Label, HappinessIndicator01Label, Boost02Button, record.Department1Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage02Label, HappinessIndicator02Label, Boost04Button, record.Department2Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage03Label, HappinessIndicator03Label, Boost06Button, record.Department3Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage04Label, HappinessIndicator04Label, Boost08Button, record.Department4Happiness);
+            PopulatePlayerTeamValues(HappinessPercentage05Label, HappinessIndicator05Label, Boost10Button, record.Department5Happiness);
         }
 
         private void PopulateHeaderControls(int player1TeamId, string player1TeamName)
