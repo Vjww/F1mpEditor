@@ -52,15 +52,6 @@ namespace F1mpEditor
         public MainForm()
         {
             InitializeComponent();
-
-            // Convert lines in control to rtf
-            var rtfString = string.Empty;
-            foreach (var item in BasicDescriptionRichTextBox.Lines)
-            {
-                // Add linebreak after each item
-                rtfString += item + @"\line ";
-            }
-            BasicDescriptionRichTextBox.Rtf = rtfString.TrimEnd(@"\line".ToCharArray());
         }
 
         public void PerformRefresh()
@@ -91,6 +82,15 @@ namespace F1mpEditor
 
             // Set form title text
             Text = $"{Settings.Default.ApplicationName} v{GetApplicationVersion()}";
+
+            // Convert lines in control to rtf
+            var rtfString = string.Empty;
+            foreach (var item in BasicDescriptionRichTextBox.Lines)
+            {
+                // Add linebreak after each item
+                rtfString += item + @"\line ";
+            }
+            BasicDescriptionRichTextBox.Rtf = rtfString.TrimEnd(@"\line".ToCharArray());
 
             // On initial run
             if (Settings.Default.InitialRun)
