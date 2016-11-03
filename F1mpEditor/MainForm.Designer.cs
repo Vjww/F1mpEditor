@@ -986,7 +986,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "{0}";
             this.Load += new System.EventHandler(this.SavedGameEditorForm_Load);
             this.FileGroupBox.ResumeLayout(false);
             this.OperationGroupBox.ResumeLayout(false);

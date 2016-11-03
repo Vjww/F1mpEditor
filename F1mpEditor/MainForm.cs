@@ -4,6 +4,7 @@ using Data.Entities.SavedGame.Team;
 using Data.FileConnection;
 using System;
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -295,6 +296,9 @@ namespace F1mpEditor
             // Configure
             ConfigureSavedGameControls();
             ConfigureDataGridViewControl(TeamsDataGridView);
+
+            // Rename column headers using model attributes
+            UpdateDataGridViewColumnHeaders<Team>(TeamsDataGridView);
         }
 
         private void ConfigureSavedGameControls()
@@ -446,6 +450,25 @@ namespace F1mpEditor
             percentageLabel.Text = value + "%";
             indicatorLabel.BackColor = GetIndicatorColor(value);
             boostButton.Visible = value < 25;
+        }
+
+        private static void UpdateDataGridViewColumnHeaders<T>(DataGridView dataGridView)
+        {
+            foreach (DataGridViewColumn column in dataGridView.Columns)
+            {
+                var properties = typeof(T).GetProperties();
+                var property = properties.Single(x => x.Name == column.DataPropertyName);
+                var attributes = property.GetCustomAttributes(true);
+                foreach (var attribute in attributes)
+                {
+                    var displayAttribute = (DisplayAttribute)attribute;
+                    if (displayAttribute != null)
+                    {
+                        // Update header text with attribute text
+                        column.HeaderText = displayAttribute.GetName();
+                    }
+                }
+            }
         }
 
         private void UpdateSavedGameRadioButtons()

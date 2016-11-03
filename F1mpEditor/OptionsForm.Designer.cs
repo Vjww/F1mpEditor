@@ -102,7 +102,6 @@
             this.MaximizeBox = false;
             this.Name = "OptionsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "{0}";
             this.Load += new System.EventHandler(this.OptionsForm_Load);
             this.PathGroupBox.ResumeLayout(false);
             this.PathGroupBox.PerformLayout();

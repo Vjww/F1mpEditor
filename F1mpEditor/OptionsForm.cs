@@ -18,7 +18,7 @@ namespace F1mpEditor
             Icon = Resources.icon1;
 
             // Set form title text
-            Text = string.Format(Text, Settings.Default.ApplicationName) + " - Options";
+            Text = $"{Settings.Default.ApplicationName} - Options";
 
             // Get path
             PathTextBox.Text = Settings.Default.UserGameFolderPath;
@@ -30,15 +30,19 @@ namespace F1mpEditor
             {
                 // Configure browser dialog where current path is valid
                 if (Directory.Exists(Settings.Default.UserGameFolderPath))
+                {
                     GameFolderBrowserDialog.SelectedPath = Settings.Default.UserGameFolderPath;
+                }
                 else
+                {
                     GameFolderBrowserDialog.RootFolder = Environment.SpecialFolder.Desktop;
+                }
 
                 // Get game folder from user
-                var folderDialogResult = GameFolderBrowserDialog.ShowDialog();
+                var dialogResult = GameFolderBrowserDialog.ShowDialog();
 
                 // If user selects a folder
-                if (folderDialogResult == DialogResult.OK)
+                if (dialogResult == DialogResult.OK)
                 {
                     // Save selected folder
                     Settings.Default.UserGameFolderPath = GameFolderBrowserDialog.SelectedPath;
@@ -51,9 +55,7 @@ namespace F1mpEditor
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    string.Format(
-                        "{0} has encountered an error while attempting to update the game folder path.{1}{1}Error: {2}",
-                        Settings.Default.ApplicationName, Environment.NewLine, ex.Message),
+                    $"{Settings.Default.ApplicationName} has encountered an error while attempting to update the game folder path.{Environment.NewLine}{Environment.NewLine}Error: {ex.Message}",
                     Settings.Default.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
