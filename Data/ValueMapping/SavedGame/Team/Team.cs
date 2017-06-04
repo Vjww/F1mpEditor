@@ -13,14 +13,19 @@
         // private const int Department1Staff2Salary = 852;
         private const int Department1MotivationOffset = 896;
         private const int Department1HappinessOffset = 900;
+        private const int Department1PressureOffset = 904;
         private const int Department2MotivationOffset = 968;
         private const int Department2HappinessOffset = 972;
+        private const int Department2PressureOffset = 976;
         private const int Department3MotivationOffset = 1040;
         private const int Department3HappinessOffset = 1044;
+        private const int Department3PressureOffset = 1048;
         private const int Department4MotivationOffset = 1112;
         private const int Department4HappinessOffset = 1116;
+        private const int Department4PressureOffset = 1120;
         private const int Department5MotivationOffset = 1184;
         private const int Department5HappinessOffset = 1188;
+        private const int Department5PressureOffset = 1192;
 
         // Lengths
         public const int NameLength = 40;

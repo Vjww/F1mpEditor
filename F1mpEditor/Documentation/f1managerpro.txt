@@ -1,0 +1,73 @@
+F1 Manager Pro Guide
+--------------------
+
+What is stability?
+Stability is the predictability of the car during braking and cornering. The higher the stability rating of a car, the less likely a driver is to make a mistake during a lap.
+
+What is air resistance?
+Air resistance is the drag efficiency of the car moving through the air. The higher the air resistance rating, the slower the car will be down the straights.
+
+What is downforce?
+Downforce pushes the car downwards into the track. The higher the downforce rating, the more grip the car will have when braking and cornering.
+
+How can I make my cars go faster around a particular track?
+Making your cars go faster depends on the characteristics of each track. Tracks with a high average speed (due to fast corners and long straights) will reward car setups that have low air resistance. Tracks with a low average speed (due to slow corners and short straights) will reward car setups that have high downforce.
+
+What tyre choice should I make for a particular track?
+Harder tyres are best matched to tracks with a high average speed and conversely, softer tyres are best matched to tracks with a low average speed. In this game (and it does not seem  very realistic), harder tyres acheive higher top speeds down the straights but are slower in corners. And softer tyres reduce top speeds down the straights but are faster in corners.
+
+What wing angles should I use for each track?
+Your wing angles should be based on the optimum G-force level for the track.
+
+How do I determine the optimum G-force level for a track?
+Use the track guide I have included as a starting reference.
+
+
+-------------------------
+
+F1 Manager Professional 1997
+
+- Where to get the game
+
+You can download the game legally from the following website. Click the second link shown for the direct download link to the zip file. Installation instructions are below. The zip file also contains bin/cue files if you wish to burn yourself a CD copy of the game but I suspect this is not necessary to play the game, as you can mount these files to a drive letter, if the game needs to do a CD check.
+
+https://archive.org/details/msdos_F1_Manager_Professional_1997
+https://archive.org/download/msdos_F1_Manager_Professional_1997/F1_Manager_Professional_1997.zip
+
+You will also need to install DosBox 0.74 to play the game on modern operating systems.
+https://www.dosbox.com/
+
+# TODO add further installation and setup instructions
+
+
+-----
+
+
+Subject: Gameplay guides, hints and tips
+
+All games are best experienced by playing and learning the game first. Use the tools within the game to understand how you can become a better player. If you want to fasttrack your gameplay and don't mind having the answers given to you, try the following guides, hints and tips.
+
+[list][*][url=http://simtek.proboards.com]F1 Manager Series Resources Site[/url]
+
+[*][url=http://www.google.com]Download the Setup Guide (Excel format)[/url]
+
+[*][url=http://www.google.com]Download the Design Guide (Excel format)[/url]
+
+[*][url=http://simtek.proboards.com/thread/127/reliability-motivation]Understanding reliability and motivation[/url][/list]
+
+If you do not have Microsoft Excel, you can either use [url=https://sheet.zoho.com/sheet/excelviewer]this site[/url] to upload and view your Excel file, or download and install the [url=https://www.microsoft.com/en-nz/download/details.aspx?id=10&751be11f-ede8-5a0c-058c-2ee190a24fa6=True]Microsoft Excel Viewer[/url].
+
+
+-----
+
+
+Subject: Mods, editors and tools
+
+tyred2010 created an executable patch/modder. Links are broken - PM me if you can help.
+http://simtek.proboards.com/thread/156
+
+DSR created a 2010 mod. Was there are v093b or v094 version? Links are broken - PM me if you can help.
+http://simtek.proboards.com/thread/142/2010-season-mod
+
+http://f1mode.blogspot.co.nz/2010/04/2010-mod-for-f1-manager-pro-v092.html
+http://f1mode.blogspot.co.nz/2010/05/2010-mod-for-f1-manager-pro-v093.html

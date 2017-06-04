@@ -466,7 +466,7 @@
             this.BasicDetailsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.BasicDetailsTabPage.Size = new System.Drawing.Size(752, 458);
             this.BasicDetailsTabPage.TabIndex = 0;
-            this.BasicDetailsTabPage.Text = "Basic";
+            this.BasicDetailsTabPage.Text = "Boost";
             this.BasicDetailsTabPage.UseVisualStyleBackColor = true;
             // 
             // BasicDescriptionRichTextBox
@@ -971,7 +971,7 @@
             this.AdvancedDetailsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.AdvancedDetailsTabPage.Size = new System.Drawing.Size(752, 458);
             this.AdvancedDetailsTabPage.TabIndex = 1;
-            this.AdvancedDetailsTabPage.Text = "Advanced (Read-Only)";
+            this.AdvancedDetailsTabPage.Text = "Review (Read-Only)";
             this.AdvancedDetailsTabPage.UseVisualStyleBackColor = true;
             // 
             // MainForm

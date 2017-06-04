@@ -1,5 +1,4 @@
-﻿using Common.Enums;
-using Data.Collections.SavedGame.Team;
+﻿using Data.Collections.SavedGame.Team;
 using Data.Entities.SavedGame.Team;
 using Data.FileConnection;
 using System;
@@ -117,12 +116,8 @@ namespace F1mpEditor
             var fileName = GetSelectedSavedGame();
             var filePath = BuildSavedGameFilePath(fileName);
 
-            SavedGameConnection savedGameConnection = null;
-            try
+            using (var savedGameConnection = new SavedGameConnection(filePath))
             {
-                savedGameConnection = new SavedGameConnection();
-                savedGameConnection.Open(filePath, StreamDirectionType.Read);
-
                 // Import from file
                 var teams = new TeamCollection();
                 for (var id = 0; id < TeamCount; id++)
@@ -157,10 +152,6 @@ namespace F1mpEditor
 
                 MessageBox.Show("Import complete!");
             }
-            finally
-            {
-                savedGameConnection?.Close();
-            }
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
@@ -168,12 +159,8 @@ namespace F1mpEditor
             var fileName = GetSelectedSavedGame();
             var filePath = BuildSavedGameFilePath(fileName);
 
-            SavedGameConnection savedGameConnection = null;
-            try
-            {
-                savedGameConnection = new SavedGameConnection();
-                savedGameConnection.Open(filePath, StreamDirectionType.Write);
-
+            using (var savedGameConnection = new SavedGameConnection(filePath))
+            { 
                 // Export to file
                 var teams = TeamsDataGridView.DataSource as TeamCollection;
                 if (teams == null)
@@ -199,10 +186,6 @@ namespace F1mpEditor
                 }
 
                 MessageBox.Show("Export complete!");
-            }
-            finally
-            {
-                savedGameConnection?.Close();
             }
         }
 
