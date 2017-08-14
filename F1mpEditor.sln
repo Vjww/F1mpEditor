@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common\Common.csproj", "{AB9E96A9-201F-4B41-96D4-3157B88FA1EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Releases", "Releases", "{922EC3F4-6079-4C8E-8A10-1CBC6D10B567}"
+	ProjectSection(SolutionItems) = preProject
+		Releases\F1mpEdit_1_0_0_0.zip = Releases\F1mpEdit_1_0_0_0.zip
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
