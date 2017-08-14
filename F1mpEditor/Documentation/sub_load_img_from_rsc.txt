@@ -1,0 +1,30 @@
+int __fastcall sub_1538B(int address, int fileName, int offset, int index)
+{
+  int _address; // [sp+0h] [bp-20h]@1
+  int _index; // [sp+Ch] [bp-14h]@1
+  int stream; // [sp+10h] [bp-10h]@3
+  int i; // [sp+18h] [bp-8h]@1
+  signed int j; // [sp+18h] [bp-8h]@3
+  int size; // [sp+1Ch] [bp-4h]@7
+
+  _address = address;                           // e.g. 18506710
+  _index = index;                               // e.g. 0
+  for ( i = index + 1; i < 98; ++i )            // for 1 - 97
+    *(_DWORD *)(address + 4 * i + 100) = 0;     // set address + { 104 -> 488 } to 0
+  stream = fopen_(fileName, "rb");              // open file in read binary
+  fseek_(stream, offset, 0);                    // seek to offset from origin (e.g. seek from beginning of file)
+  fread_(_address + 52, 1, 4, stream);          // read four bytes to get unknown as int32 (address + 0)
+  fread_(_address + 8, 1, 4, stream);           // read four bytes to get column count as int32 (address + 4)
+  fread_(_address + 12, 1, 4, stream);          // read four bytes to get row count as int32 (address + 8)
+  fread_(_address + 16, 1, 4, stream);          // read four bytes to get size ??? as int32 (e.g. 6622)
+  for ( j = 1; j <= *(_DWORD *)(_address + 16); ++j )// for 1 -> 6622
+  {
+    fread_(&size, 1, 4, stream);                // read four bytes into a local variable "size"
+    *(_DWORD *)(4 * (_index + j) + _address + 492) = size;// set address + { 496 -> 26980 } to "size"
+    *(_DWORD *)(_address + 4 * (_index + j) + 100) = nmalloc_(size);// set address + { 104 -> 2488 } to allocated memory area of "size"
+    ++dword_18B800;
+    fread_(*(_DWORD *)(_address + 4 * (_index + j) + 100), 1, size, stream);// read "size" bytes into address + { 104 -> 6722 }
+  }
+  *(_DWORD *)(_address + 956) = 0;
+  return fclose_(stream);
+}

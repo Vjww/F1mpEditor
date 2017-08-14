@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>\\localhost\c%24\Dev\Deployment\F1mpEditor\</PublishUrl>
+    <PublishUrl>\\localhost\c%24\Dev\Deployment\F1mpEdit\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Unc</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -23,8 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
-    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
@@ -113,6 +112,7 @@
     <None Include="app.manifest" />
     <None Include="Documentation\F1ManPro_DesignGuide.xlsx" />
     <None Include="Documentation\F1ManPro_SetupGuide.xlsx" />
+    <None Include="Documentation\savegame_mechanics.hbk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -138,7 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentation\f1managerpro.txt" />
-    <Content Include="Resources\icon1.ico" />
+    <None Include="Documentation\sub_load_img_from_rsc.txt" />
+    <None Include="Resources\icon1.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
